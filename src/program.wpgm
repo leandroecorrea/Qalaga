@@ -1,0 +1,21 @@
+import wollok.game.*
+import example.*
+program abc {
+
+	game.cellSize(1)
+	game.width(800)
+	game.height(600)
+	game.ground("bg.png")
+	game.addVisual(barra)	
+	game.addVisual(nave1)
+	keyboard.left().onPressDo({barra.mover(izquierda)})
+	keyboard.right().onPressDo({barra.mover(derecha)})
+	keyboard.space().onPressDo({
+		game.addVisual(bala)
+		bala.disparar(barra)
+		game.onTick(50, "Bala", {bala.actualizar()})	
+	})
+	game.onCollideDo(nave1, {otro => otro.colision(nave1)})
+	game.onTick(100, "Nave1", {nave1.actualizar()})
+	game.start()
+}
